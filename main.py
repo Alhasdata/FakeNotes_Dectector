@@ -106,7 +106,7 @@ with functions :
             fig = px.pie(X_upload, names = "Nature_billet", hole = 0.2,color_discrete_sequence = ["darkslategrey","bisque"])
             fig.update_layout(margin=dict(l=10,r=10,b=10,t=10,pad=20),legend=dict(yanchor="top",y=0.99,xanchor="left",x=0.01))
             fig2,ax = plt.subplots()
-            plt.subplots_adjust(left=0.1, bottom=0.1, right=1, top=0.9)
+            #plt.subplots_adjust(left=0.1, bottom=0.1, right=1, top=0.9)
             sns.countplot(x="Nature_billet", palette=["darkslategrey","bisque"], data=X_upload, ax=ax)
             col2.pyplot(fig2, use_container_width=True)
             col1.plotly_chart(fig, use_container_width=True)
