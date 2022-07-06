@@ -18,26 +18,15 @@ summary = st.container()
 
 
 with header:
-
-    image = Image.open('data/logo.png')
-    st.sidebar.image(image, caption='ONCMF', width=300)
-    st.sidebar.markdown("<p style='text-align: center;'>Organisation nationale de lutte contre le faux-monnayage</p>",unsafe_allow_html=True)
-    st.sidebar.markdown("")
-    st.sidebar.markdown("")
-    st.sidebar.markdown("")
     #st.sidebar.title('Navigation') # Sidebar setup
     st.sidebar.title('Navigation') #Sidebar navigation
     options = st.sidebar.radio('Select what you want to display:', ['Home', 'Data Header', 'Results'])
-    st.sidebar.markdown("")
-    st.sidebar.markdown("")
-    st.sidebar.markdown("")
     # Add a title and intro text
     st.markdown("<h1 style='text-align: center; color: grey;'>Bienvenue sur StopFake</h1>", unsafe_allow_html=True)
     st.write("")
     st.markdown("<p style='text-align: center;'>L'app qui vous permet d'identifier les billets de contrefaçons à partir de leurs dimensions géométriques.</p>", unsafe_allow_html=True)
     st.write("")
     
-
 with model:
     # Préparation des fichiers
     data_reg_log = pd.read_csv("data/df_final.csv")
@@ -80,8 +69,6 @@ with model:
         X_upload["Nature_billet"] =  X_upload["Predictions"].copy()
         X_upload["Nature_billet"].replace([0,1],["Faux billet", "Vrai billet"], inplace=True)
 
-
-
 with functions :
 # Functions for each of the pages
     def home(uploaded_file):
@@ -115,18 +102,15 @@ with functions :
             st.markdown("")
             st.markdown("")
             st.markdown("")
-            col1, col2, col3, col4 = st.columns((1,2,2,1))
+            col1, col2, = st.columns(2)
             fig = px.pie(X_upload, names = "Nature_billet", hole = 0.2,color_discrete_sequence = ["darkslategrey","bisque"])
-            fig.update_layout( margin=dict(l=0,r=25,b=120,t=0,pad=0),legend=dict(yanchor="top",y=0.99,xanchor="left",x=0.01))
+            fig.update_layout(margin=dict(l=10,r=10,b=10,t=10,pad=20),legend=dict(yanchor="top",y=0.99,xanchor="left",x=0.01))
             fig2,ax = plt.subplots()
+            plt.subplots_adjust(left=0.1, bottom=0.1, right=1, top=0.9)
             sns.countplot(x="Nature_billet", palette=["darkslategrey","bisque"], data=X_upload, ax=ax)
-            col3.pyplot(fig2, use_container_width=True)
-            col2.plotly_chart(fig, use_container_width=True)
-            faux =len(X_upload[X_upload["Predictions"]==0])
-            vrai = len(X_upload[X_upload["Predictions"]==1])
-            st.write('*Nombre de Faux billets détectés :*', faux)
-            st.write('*Nombre de billets authentiques détectés :*', vrai)
-
+            col2.pyplot(fig2, use_container_width=True)
+            col1.plotly_chart(fig, use_container_width=True)
+            
 
         else:
             st.markdown("<h4 style='text-align: center; color: grey;'>Chargez un jeu de données SVP.</h4>", unsafe_allow_html=True)
