@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 import seaborn as sns
 from PIL import Image
 
-st.set_page_config( layout='wide')
+st.set_page_config( layout='centered')
 
 header = st.container()
 model = st.container()
@@ -76,8 +76,8 @@ with functions :
             st.markdown("<h4 style='text-align: center; color: grey;'>Utilisez le menu de gauche pour afficher les résultats du test.</h4>", unsafe_allow_html=True)
         else: 
             background = Image.open("data/fake2.jpg")
-            col1, col2, col3 = st.columns((1,2,1))
-            col2.image(background,use_column_width=True)
+            
+            st.image(background,use_column_width=True)
             st.write("")
             st.markdown("<h5 style='text-align: center; color: grey;'>Chargez un jeu de données pour démarrer le test...</h5>", unsafe_allow_html=True)
             st.markdown("<p style='text-align: center;'>(Vous pouvez utiliser le menu de gauche pour uploader un fichier csv et afficher les résultats)</p>", unsafe_allow_html=True)
@@ -85,31 +85,26 @@ with functions :
         
 
     def data_header(uploaded_file):
-        col1, col2, col3 = st.columns((1,2,1))
         if uploaded_file:
-            col2.markdown("<h5 style='text-align: center; color: grey;'>Un aperçu de vos données...</h5>", unsafe_allow_html=True)
+            st.markdown("<h5 style='text-align: center; color: grey;'>Un aperçu de vos données...</h5>", unsafe_allow_html=True)
             fig = go.Figure(data=go.Table(header=dict(values=list(df[['diagonal', 'height_left', 'height_right', 'margin_low', 'margin_up','length']].columns), fill_color="#FD8E72", align="center", font=dict( size=18),height=40),
                                           cells=dict(values = [df.diagonal, df.height_left, df.height_right, df.margin_low, df.margin_up,df.length],font=dict( size=16), height=40)))
-            fig.update_layout(margin=dict(l=20,r=20,b=40,t=40))
-            col2.write(fig)
+            fig.update_layout(margin=dict(l=5,r=5,b=10,t=10))
+            st.write(fig)
         else:
             st.markdown("<h4 style='text-align: center; color: grey;'>Chargez un jeu de données SVP.</h4>", unsafe_allow_html=True)
 
-
+    
     def results(uploaded_file):
         if uploaded_file:
             st.markdown("<h4 style='text-align: center;'>Résultats du test</h4>", unsafe_allow_html=True)
             st.markdown("")
-            st.markdown("")
-            st.markdown("")
-            col1, col2, = st.columns(2)
+            col1, col2 = st.columns(2)
             fig = px.pie(X_upload, names = "Nature_billet", hole = 0.2,color_discrete_sequence = ["darkslategrey","bisque"])
-            fig.update_layout(margin=dict(l=10,r=10,b=30,t=10,pad=20),legend=dict(yanchor="top",y=0.99,xanchor="left",x=0.01))
-            fig2,ax = plt.subplots()
-            #plt.subplots_adjust(left=0.1, bottom=0.1, right=1, top=0.9)
-            sns.countplot(x="Nature_billet", palette=["darkslategrey","bisque"], data=X_upload, ax=ax)
-            col2.pyplot(fig2, use_container_width=True)
-            col1.plotly_chart(fig, use_container_width=True)
+            fig.update_layout()
+            fig2 = sns.catplot(x="Nature_billet", kind="count",palette=["darkslategrey","bisque"], data=X_upload)
+            col1.pyplot(fig2, use_container_width=True)
+            col2.plotly_chart(fig, use_container_width=True)
             
 
         else:
