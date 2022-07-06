@@ -23,14 +23,9 @@ with header:
     st.sidebar.image(image, caption='ONCMF', width=300)
     st.sidebar.markdown("<p style='text-align: center;'>Organisation nationale de lutte contre le faux-monnayage</p>",unsafe_allow_html=True)
     st.sidebar.markdown("")
-    st.sidebar.markdown("")
-    st.sidebar.markdown("")
     #st.sidebar.title('Navigation') # Sidebar setup
     st.sidebar.title('Navigation') #Sidebar navigation
     options = st.sidebar.radio('Select what you want to display:', ['Home', 'Data Header', 'Results'])
-    st.sidebar.markdown("")
-    st.sidebar.markdown("")
-    st.sidebar.markdown("")
     # Add a title and intro text
     st.markdown("<h1 style='text-align: center; color: grey;'>Bienvenue sur StopFake</h1>", unsafe_allow_html=True)
     st.write("")
